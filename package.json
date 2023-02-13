@@ -1,0 +1,72 @@
+{
+  "name": "@neerajadobe93/testvega",
+  "version": "1.4.9",
+  "private": true,
+  "description": "testvega",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "c8 mocha  -i -g 'Post-Deploy'",
+    "test-postdeploy": "mocha -g 'Post-Deploy'",
+    "lint": "eslint .",
+    "semantic-release": "semantic-release",
+    "commit": "git-cz",
+    "build": "hedy -v",
+    "deploy": "hedy -v --deploy --test",
+    "deploy-routes": "hedy --no-build --no-hints -l major",
+    "deploy-ci": "hedy -v --deploy --test --pkgVersion=ci$CIRCLE_BUILD_NUM -l ci --cleanup-ci 24h",
+    "prepare": "husky install"
+  },
+  "wsk": {
+    "nodeVersion": 18,
+    "target": "aws",
+    "name": "helix-services/testvega@${version}",
+    "testUrl": "/_status_check/healthcheck.json",
+    "memory": 256,
+    "fastlyServiceId!important": ""
+  },
+  "mocha": {
+    "spec": "test/**/*.test.js",
+    "require": "test/setup-env.js",
+    "recursive": "true",
+    "reporter": "mocha-multi-reporters",
+    "reporter-options": "configFile=.mocha-multi.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neerajadobe93/testvega"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/neerajadobe93/testvega/issues"
+  },
+  "homepage": "https://github.com/neerajadobe93/testvega#readme",
+  "dependencies": {
+    "@adobe/fetch": "4.0.1",
+    "@adobe/helix-shared-wrap": "2.0.0",
+    "@adobe/helix-status": "10.0.1",
+    "@adobe/helix-universal-logger": "3.0.1"
+  },
+  "devDependencies": {
+    "@adobe/eslint-config-helix": "2.0.1",
+    "@adobe/helix-deploy": "9.0.1",
+    "@adobe/helix-universal": "4.1.1",
+    "@adobe/semantic-release-coralogix": "1.1.14",
+    "@semantic-release/changelog": "6.0.2",
+    "@semantic-release/exec": "6.0.3",
+    "@semantic-release/git": "10.0.1",
+    "c8": "7.12.0",
+    "dotenv": "16.0.3",
+    "eslint": "8.32.0",
+    "husky": "8.0.3",
+    "junit-report-builder": "3.0.1",
+    "lint-staged": "13.1.0",
+    "mocha": "10.2.0",
+    "mocha-multi-reporters": "1.5.1",
+    "semantic-release": "19.0.5"
+  },
+  "lint-staged": {
+    "*.js": "eslint"
+  }
+}
